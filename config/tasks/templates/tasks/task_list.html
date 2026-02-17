@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Tasks</title>
+    <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
+</head>
+
+<body>
+
+<h1>My Task List</h1>
+
+<div class="task-container">
+    {% for task in tasks %}
+        <div class="task-card">
+            <h3 class="task-title">{{ task.title }}</h3>
+            <p class="task-desc">{{ task.description }}</p>
+
+            {% if task.completed %}
+                <p class="completed">Completed</p>
+            {% else %}
+                <p class="not-completed">Pending</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No tasks available</p>
+    {% endfor %}
+</div>
+
+</body>
+
+</html>
