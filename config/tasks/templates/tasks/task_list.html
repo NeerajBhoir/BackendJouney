@@ -10,6 +10,12 @@
 <body>
 
 <h1>My Task List</h1>
+<div class="add-btn-container">
+    <a href="{% url 'add_task' %}">
+        <button class="add-btn">+ Add New Task</button>
+    </a>
+</div>
+
 
 <div class="task-container">
     {% for task in tasks %}
