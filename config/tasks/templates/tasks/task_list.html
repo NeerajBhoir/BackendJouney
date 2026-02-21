@@ -1,8 +1,8 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html>
 
+<html>
 <head>
     <title>My Tasks</title>
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
@@ -10,48 +10,69 @@
 
 <body>
 
-    <h1>My Task List</h1>
-    <div class="add-btn-container">
-        <a href="{% url 'add_task' %}">
-            <button class="add-btn">+ Add New Task</button>
+<h1>My Task List</h1>
+
+<div class="add-btn-container">
+    <a href="{% url 'add_task' %}">
+        <button class="add-btn">+ Add New Task</button>
+    </a>
+</div>
+
+<div class="task-container">
+
+```
+{% for task in tasks %}
+<div class="task-card 
+    {% if task.is_overdue %}overdue{% endif %}
+    {% if task.completed %}done{% endif %}">
+
+    <h3 class="task-title">{{ task.title }}</h3>
+
+    {% if task.description %}
+        <p class="task-desc">{{ task.description }}</p>
+    {% endif %}
+
+    {% if task.due_date %}
+        <p class="due-date">Due: {{ task.due_date }}</p>
+    {% endif %}
+
+    <p class="{% if task.completed %}completed{% else %}not-completed{% endif %}">
+        {% if task.completed %}
+            Completed
+        {% else %}
+            Pending
+        {% endif %}
+    </p>
+
+    <div class="actions">
+
+        <a href="{% url 'toggle_task' task.id %}">
+            <button class="toggle-btn">
+                {% if task.completed %}
+                    Mark Pending
+                {% else %}
+                    Mark Complete
+                {% endif %}
+            </button>
         </a>
+
+        <a href="{% url 'edit_task' task.id %}">
+            <button class="edit-btn">Edit</button>
+        </a>
+
+        <a href="{% url 'delete_task' task.id %}">
+            <button class="delete-btn">Delete</button>
+        </a>
+
     </div>
 
+</div>
+{% empty %}
+    <p style="text-align:center;">No tasks yet. Create your first task 🚀</p>
+{% endfor %}
+```
 
-    <div class="task-container">
-        {% for task in tasks %}
-        <div class="task-card">
-            <a href="{% url 'toggle_task' task.id %}">
-                <button>
-                    {% if task.completed %}
-                    Mark as Pending
-                    {% else %}
-                    Mark as Complete
-                    {% endif %}
-                </button>
-            </a>
-            <a href="{% url 'delete_task' task.id %}">
-                <button style="background:#e74c3c;color:white;">
-                    Delete
-                </button>
-            </a>
-            {% if task.due_date %}
-            <p>Due: {{ task.due_date }}</p>
-            {% endif %}
-            <h3 class="task-title">{{ task.title }}</h3>
-            <p class="task-desc">{{ task.description }}</p>
-
-            {% if task.completed %}
-            <p class="completed">Completed</p>
-            {% else %}
-            <p class="not-completed">Pending</p>
-            {% endif %}
-        </div>
-        {% empty %}
-        <p>No tasks available</p>
-        {% endfor %}
-    </div>
+</div>
 
 </body>
-
 </html>

@@ -128,3 +128,52 @@ a {
     text-decoration: none;
     color: #3498db;
 }
+.toggle-btn {
+    background-color: #3498db;
+}
+
+.edit-btn {
+    background-color: #f39c12;
+}
+
+.delete-btn {
+    background-color: #e74c3c;
+}
+/* Action Buttons Layout */
+.actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.actions button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.actions button:hover {
+    opacity: 0.9;
+}
+
+.due-date {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+/* Completed task */
+.done {
+    background: #e8f5e9;
+}
+
+/* Overdue task */
+.overdue {
+    background: #fdecea;
+    border-left: 6px solid #e74c3c;
+}
