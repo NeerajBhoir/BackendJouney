@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>My Tasks</title>
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
@@ -9,30 +10,47 @@
 
 <body>
 
-<h1>My Task List</h1>
-<div class="add-btn-container">
-    <a href="{% url 'add_task' %}">
-        <button class="add-btn">+ Add New Task</button>
-    </a>
-</div>
+    <h1>My Task List</h1>
+    <div class="add-btn-container">
+        <a href="{% url 'add_task' %}">
+            <button class="add-btn">+ Add New Task</button>
+        </a>
+    </div>
 
 
-<div class="task-container">
-    {% for task in tasks %}
+    <div class="task-container">
+        {% for task in tasks %}
         <div class="task-card">
+            <a href="{% url 'toggle_task' task.id %}">
+                <button>
+                    {% if task.completed %}
+                    Mark as Pending
+                    {% else %}
+                    Mark as Complete
+                    {% endif %}
+                </button>
+            </a>
+            <a href="{% url 'delete_task' task.id %}">
+                <button style="background:#e74c3c;color:white;">
+                    Delete
+                </button>
+            </a>
+            {% if task.due_date %}
+            <p>Due: {{ task.due_date }}</p>
+            {% endif %}
             <h3 class="task-title">{{ task.title }}</h3>
             <p class="task-desc">{{ task.description }}</p>
 
             {% if task.completed %}
-                <p class="completed">Completed</p>
+            <p class="completed">Completed</p>
             {% else %}
-                <p class="not-completed">Pending</p>
+            <p class="not-completed">Pending</p>
             {% endif %}
         </div>
-    {% empty %}
+        {% empty %}
         <p>No tasks available</p>
-    {% endfor %}
-</div>
+        {% endfor %}
+    </div>
 
 </body>
 
