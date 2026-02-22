@@ -1,12 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
 {% load static %}
-<!DOCTYPE html>
-<html>
-<head>
+
     <title>Edit Task</title>
     <link rel="stylesheet" href="{% static 'tasks/style.css' %}">
-</head>
 
-<body>
 
 <h1>Edit Task</h1>
 
@@ -31,5 +29,4 @@
 <br>
 <a href="{% url 'tasks_home' %}">← Back</a>
 
-</body>
-</html>
+{% endblock %}
