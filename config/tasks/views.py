@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Task
 from django.contrib.auth.decorators import login_required
+from rest_framework import generics, permissions
+from .serializers import TaskSerializer
 
 
 # SHOW TASKS (only logged in user's tasks)
@@ -63,3 +65,23 @@ def delete_task(request, task_id):
         return redirect('tasks_home')
 
     return render(request, 'tasks/delete_task.html', {'task': task})
+
+# API - List & Create
+class TaskListCreateAPI(generics.ListCreateAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+
+# API - Retrieve, Update, Delete
+class TaskDetailAPI(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Task.objects.filter(user=self.request.user)
